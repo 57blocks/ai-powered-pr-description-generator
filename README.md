@@ -37,7 +37,7 @@ To get started with the AI-Powered PR Description Generator, follow the instruct
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/ai-powered-pr-description-generator.git
+   git clone https://github.com/57blocks/ai-powered-pr-description-generator.git
    cd ai-powered-pr-description-generator
 
 2. Install the dependencies:
