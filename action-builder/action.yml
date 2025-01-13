@@ -3,10 +3,10 @@ description: 'Automatically generates descriptive summaries for pull requests us
 author: 'Rock Chen'
 runs:
   using: 'node20'
-  main: '../dist/bundle.js'
+  main: './dist/bundle.js'
 inputs:
   ai_name:
-    description: 'The name of AI, currently just supports gemini'
+    description: 'The name of AI, currently just supports gemini, open-ai'
     required: true
     default: 'gemini'
   api_key:
