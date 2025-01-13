@@ -1,4 +1,3 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { AIHelperInterface, AIHelperParams } from './types';
 
 class OpenAIHelper implements AIHelperInterface {
