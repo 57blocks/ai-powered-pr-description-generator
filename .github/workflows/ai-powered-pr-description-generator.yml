@@ -20,7 +20,7 @@ jobs:
           fetch-depth: 0
 
       - name: Generate PR Description
-        uses: action-builder
+        uses: ./action-builder
         with:
           ai_name: 'open-ai'
           api_key: ${{ secrets.OPEN_AI_API_KEY }}
