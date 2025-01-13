@@ -1,0 +1,29 @@
+name: AI-Powered PR Description Generator
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  generate-pr-description:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate PR Description
+        uses: ./ai-powered-pr-description-generator/actions
+        with:
+          ai_name: 'open-ai'
+          api_key: ${{ secrets.OPEN_AI_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          temperature: 0.8  # Optional: default is 8
+          use_jira: 'true'
