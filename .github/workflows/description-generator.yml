@@ -25,5 +25,5 @@ jobs:
           ai_name: 'open-ai'
           api_key: ${{ secrets.OPEN_AI_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          temperature: 0.8  # Optional: default is 8
+          temperature: 0.7  # Optional: default is 0.7
           use_jira: 'false'

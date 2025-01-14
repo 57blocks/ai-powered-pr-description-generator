@@ -1,5 +1,5 @@
-name: 'AI-Powered PR Description Generator'
-description: 'Automatically generates descriptive summaries for pull requests using AI, enhancing clarity and context for reviewers.'
+name: 'GitHub Action'
+description: 'AI-Powered PR Description Generator'
 author: 'Rock Chen'
 runs:
   using: 'node20'
@@ -16,9 +16,9 @@ inputs:
     description: 'GitHub token with repository permissions to access and modify pull requests. Make sure it has at least read and write access to pull requests.'
     required: true
   temperature:
-    description: 'Controls the randomness of the generated descriptions. A value between 0.0 (more deterministic) and 1.0 (more creative). Default is set to 0.8 for balanced creativity.'
+    description: 'Controls the randomness of the generated descriptions. A value between 0.0 (more deterministic) and 1.0 (more creative).'
     required: false
-    default: '0.8'
+    default: '0.7'
   ignores:
     description: 'AI will not analyze changes to files or folders in this array'
     required: false
