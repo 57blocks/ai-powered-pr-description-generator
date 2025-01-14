@@ -1,4 +1,4 @@
-name: 'GitHub Action'
+name: 'AI-Powered PR Description Generator'
 description: 'AI-Powered PR Description Generator'
 author: 'Rock Chen'
 runs:
