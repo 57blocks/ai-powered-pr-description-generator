@@ -62,8 +62,8 @@ Here's an example of how to set up your GitHub Actions workflow file (.github/wo
 ## Supported AI Models
 The project currently supports the following AI models for generating descriptions:
 
-Gemini: An AI model that provides concise and relevant descriptions for pull requests.
-OpenAI: A more advanced AI model that can generate detailed and nuanced descriptions.
+- Gemini: An AI model that provides concise and relevant descriptions for pull requests.
+- OpenAI: A more advanced AI model that can generate detailed and nuanced descriptions.
 You can configure which AI model to use in your workflow settings.
 
 ## Contributing
