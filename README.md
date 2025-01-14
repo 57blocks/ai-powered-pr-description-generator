@@ -43,6 +43,7 @@ To get started with the AI-Powered PR Description Generator, follow the instruct
 2. Install the dependencies:
 
    ```bash
+   npm install & npm run build
    
 ## Configuration
 Before using the generator, you need to configure the following secrets in your GitHub repository settings:
