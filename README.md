@@ -29,19 +29,18 @@ To get started with the AI-Powered PR Description Generator, follow the instruct
 
 ## Installation
 
-### Prerequisites
+- Prerequisites
+  - [Node.js](https://nodejs.org/) (version 20 or above)
+  - [npm](https://www.npmjs.com/) (Node package manager)
 
-- [Node.js](https://nodejs.org/) (version 20 or above)
-- [npm](https://www.npmjs.com/) (Node package manager)
-
-### Clone the repository:
+- Clone the repository:
 
    ```bash
    git clone https://github.com/your-username/ai-powered-pr-description-generator.git
    cd ai-powered-pr-description-generator
    ```
 
-### Install the dependencies:
+- Install the dependencies:
 
    ```bash
    npm install & npm run build
