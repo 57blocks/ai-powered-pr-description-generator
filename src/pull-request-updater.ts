@@ -9,7 +9,6 @@ class PullRequestUpdater {
   private context: any;
   private aiHelper: AIHelperInterface;
   private octokit: any;
-  private useJira: boolean;
 
   constructor() {
     this.gitHelper = new GitHelper(getInput('ignores'));
@@ -21,7 +20,6 @@ class PullRequestUpdater {
     });
     const githubToken = getInput('github_token', { required: true });
     this.octokit = getOctokit(githubToken);
-    this.useJira = getInput('use_jira') === 'true';
   }
 
   private generatePrompt(diffOutput: string, creator: string): string {
@@ -84,16 +82,14 @@ ${diffOutput}`;
   async updatePullRequestDescription(pullRequestNumber: number, generatedDescription: string) {
     try {
       const pullRequest = await this.fetchPullRequestDetails(pullRequestNumber);
-      const branchName = this.extractBranchName();
       
       const currentDescription = pullRequest.body || '';
-      const newDescription = this.jiraFormat(branchName, generatedDescription);
 
       if (currentDescription) {
         await this.postOriginalDescriptionComment(pullRequestNumber, currentDescription);
       }
 
-      await this.applyPullRequestUpdate(pullRequestNumber, newDescription);
+      await this.applyPullRequestUpdate(pullRequestNumber, generatedDescription);
     } catch (error) {
       console.error('Error in updatePullRequestDescription:', error);
       throw error;
@@ -111,11 +107,6 @@ ${diffOutput}`;
 
   extractBranchName(): string {
     return this.context.payload.pull_request.head.ref.replace('feat/', '').replace('fix/', '');
-  }
-
-  jiraFormat(branchName: string, generatedDescription: string): string {
-    const jiraStr = this.useJira ? `## Jira Ticket\n\nhttps://vungle.atlassian.net/browse/${branchName}\n\n` : '';
-    return `${jiraStr}${generatedDescription}`;
   }
 
   async postOriginalDescriptionComment(pullRequestNumber: number, currentDescription: string) {
