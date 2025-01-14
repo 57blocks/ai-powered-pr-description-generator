@@ -17,7 +17,7 @@ class PullRequestUpdater {
     this.aiHelper = aiHelperResolver({
       apiKey: getInput('api_key', { required: true }),
       aiName: getInput('ai_name', { required: true }),
-      temperature: parseFloat(getInput('temperature') || '0.8'),
+      temperature: parseFloat(getInput('temperature') || '0.7'),
     });
     const githubToken = getInput('github_token', { required: true });
     this.octokit = getOctokit(githubToken);
@@ -35,7 +35,6 @@ Please generate a Pull Request description for the provided diff, following thes
 - Do not include any code snippets or images.
 - Please add some emojis to make it more fun! Emojis only contain the following: 🚀🎉👍👏🔥. List the changes using numbers, each list should only have 0 or 1 emoji. 
   e.g. 1. Added a new feature👏, 2. Fixed a bug👍, 3. Made a big change for preact🚀 etc. But do not exceed 3 emojis in your list!!!
-- 
 - Thanks to **${creator}** for the contribution! 🎉
 
 Diff:
