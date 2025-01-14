@@ -30,5 +30,5 @@ outputs:
   description:
     description: 'The AI-generated description for the pull request, providing context and details for reviewers.'
 branding:
-  icon: 'git-pull-request'
+  icon: 'AI-Powered PR'
   color: 'red'
