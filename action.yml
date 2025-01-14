@@ -1,5 +1,5 @@
 name: 'AI-Powered PR Description Generator'
-description: 'This GitHub Action utilizes advanced AI algorithms to automatically generate comprehensive and engaging pull request descriptions.'
+description: 'Utilizes advanced AI algorithms to automatically generate pull request descriptions.'
 author: 'Rock Chen'
 runs:
   using: 'node20'
