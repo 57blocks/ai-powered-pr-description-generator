@@ -27,23 +27,25 @@ Automatically generates descriptive summaries for pull requests using AI, enhanc
 
 To get started with the AI-Powered PR Description Generator, follow the instructions below to set up your environment and configure the project.
 
+## Installation
+
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/) (version 20 or above)
 - [npm](https://www.npmjs.com/) (Node package manager)
 
-## Installation
-
-1. Clone the repository:
+### Clone the repository:
 
    ```bash
    git clone https://github.com/your-username/ai-powered-pr-description-generator.git
    cd ai-powered-pr-description-generator
+   ```
 
-2. Install the dependencies:
+### Install the dependencies:
 
    ```bash
    npm install & npm run build
+   ```
    
 ## Configuration
 Before using the generator, you need to configure the following secrets in your GitHub repository settings:
