@@ -25,8 +25,8 @@ export class GitHelper {
       ignoreFiles = this.ignores.split(',').map((item) => `:!${item}`);
     }
     console.log("ignoreFiles = ", JSON.stringify(ignoreFiles));
-    const diffOutput = execSync(`git diff origin/${baseBranch} origin/${headBranch} -- ${ignoreFiles.join(' ')}`, { encoding: 'utf8' });
-    // console.log('Filtered diff output:', diffOutput);
+    const diffOutput = execSync(`git diff origin/${baseBranch} origin/${headBranch}`, { encoding: 'utf8' });
+    console.log('Filtered diff output:', diffOutput);
     return diffOutput;
   }
 }
