@@ -31,4 +31,4 @@ jobs:
           git config --local user.email "action@github.com"
           git add dist/*
           git commit -m "Update build artifacts" || echo "No changes to commit"
-          git push
+          git push origin main
