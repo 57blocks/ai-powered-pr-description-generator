@@ -22,51 +22,62 @@ class PullRequestUpdater {
     this.octokit = getOctokit(githubToken);
   }
 
-  private generatePrompt(diffOutput: string, creator: string): string {
-    return `Instructions:
-Please generate a Pull Request description for the provided diff, following these guidelines:
-- Add a subtitle "## What this PR do?" to the first line.
-- Format your answer in Markdown.
-- Do not include the title of the PR. e.g. "feat: xxx" "fix: xxx" "Refactor: xxx".
-- Do not include the diff in the PR description.
-- Describe the changes simply in the PR.
-- Do not include any code snippets or images.
-- Please add some emojis to make it more fun! Emojis only contain the following: 🚀🎉👍👏🔥. List the changes using numbers, each list should only have 0 or 1 emoji. 
-  e.g. 1. Added a new feature👏, 2. Fixed a bug👍, 3. Made a big change for preact🚀 etc. But do not exceed 3 emojis in your list!!!
-- 
-- Thanks to **${creator}** for the contribution! 🎉
-
-Diff:
-${diffOutput}`;
+   private generatePrompt(diffOutput: string, creator: string): string {
+      return `Instructions:
+    Please generate a Pull Request description for the provided diff, following these guidelines:
+    - Start with a subtitle "## What this PR does?".
+    - Format your response in Markdown.
+    - Exclude the PR title (e.g., "feat: xxx", "fix: xxx", "Refactor: xxx").
+    - Do not include the diff in the PR description.
+    - Provide a simple description of the changes.
+    - Avoid code snippets or images.
+    - Add some fun with emojis! Use only the following: 🚀🎉👍👏🔥. List changes using numbers, with a maximum of one emoji per item. Limit the total to 3 emojis. Example: 
+      1. Added a new feature👏 
+      2. Fixed a bug👍 
+      3. Major refactor🚀.
+    - Thank **${creator}** for the contribution! 🎉
+  
+    Diff:
+    ${diffOutput}`;
   }
 
   async run() {
     try {
-      this.validateEventContext();
+        // Validate the event context
+        this.validateEventContext();
 
-      const pullRequestNumber = this.context.payload.pull_request.number;
-      const creator = this.context.payload.pull_request.user.login;
-      const { baseBranch, headBranch } = this.extractBranchRefs();
-      this.gitHelper.setupGitConfiguration();
-      this.gitHelper.fetchGitBranches(baseBranch, headBranch);
+        // Extract pull request details
+        const pullRequestNumber = this.context.payload.pull_request.number;
+        const creator = this.context.payload.pull_request.user.login;
+        const { baseBranch, headBranch } = this.extractBranchRefs();
 
-      const diffOutput = this.gitHelper.getGitDiff(baseBranch, headBranch);
-      const prompt = this.generatePrompt(diffOutput, creator);
-      const generatedDescription = await this.aiHelper.createPullRequestDescription(diffOutput,  prompt);
-      
-      await this.updatePullRequestDescription(pullRequestNumber, generatedDescription);
+        // Set up Git configuration and fetch branches
+        this.gitHelper.setupGitConfiguration();
+        await this.gitHelper.fetchGitBranches(baseBranch, headBranch);
 
-      setOutput('pr_number', pullRequestNumber.toString());
-      setOutput('description', generatedDescription);
-      console.log(`Successfully updated PR #${pullRequestNumber} description.`);
+        // Get the diff and generate the PR description
+        const diffOutput = this.gitHelper.getGitDiff(baseBranch, headBranch);
+        const prompt = this.generatePrompt(diffOutput, creator);
+        const generatedDescription = await this.aiHelper.createPullRequestDescription(diffOutput, prompt);
+
+        // Update the pull request description
+        await this.updatePullRequestDescription(pullRequestNumber, generatedDescription);
+
+        // Set outputs for GitHub Actions
+        setOutput('pr_number', pullRequestNumber.toString());
+        setOutput('description', generatedDescription);
+        
+        console.log(`Successfully updated PR #${pullRequestNumber} description.`);
     } catch (error) {
-      setFailed(error instanceof Error ? error.message : 'Unknown error');
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        setFailed(errorMessage);
+        console.error(`Error updating PR: ${errorMessage}`);
     }
   }
 
   validateEventContext() {
     if (this.context.eventName !== 'pull_request') {
-      setFailed('This action only runs on pull_request events.');
+      setFailed('This action should only runs on pull_request events.');
       throw new Error('Invalid event context');
     }
   }
@@ -81,20 +92,23 @@ ${diffOutput}`;
 
   async updatePullRequestDescription(pullRequestNumber: number, generatedDescription: string) {
     try {
-      const pullRequest = await this.fetchPullRequestDetails(pullRequestNumber);
-      
-      const currentDescription = pullRequest.body || '';
+        // Fetch pull request details
+        const pullRequest = await this.fetchPullRequestDetails(pullRequestNumber);
+        const currentDescription = pullRequest.body || '';
 
-      if (currentDescription) {
-        await this.postOriginalDescriptionComment(pullRequestNumber, currentDescription);
-      }
+        // Post a comment with the original description if it exists
+        if (currentDescription) {
+            await this.postOriginalDescriptionComment(pullRequestNumber, currentDescription);
+        }
 
-      await this.applyPullRequestUpdate(pullRequestNumber, generatedDescription);
+        // Apply the new pull request description
+        await this.applyPullRequestUpdate(pullRequestNumber, generatedDescription);
     } catch (error) {
-      console.error('Error in updatePullRequestDescription:', error);
-      throw error;
+        // Log the error and rethrow it for higher-level handling
+        console.error(`Error updating PR #${pullRequestNumber} description:`, error);
+        throw error;
     }
-  }
+  }Ï
 
   async fetchPullRequestDetails(pullRequestNumber: number) {
     const { data } = await this.octokit.rest.pulls.get({
