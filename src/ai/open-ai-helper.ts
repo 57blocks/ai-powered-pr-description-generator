@@ -37,7 +37,7 @@ class OpenAIHelper implements AIHelperInterface {
           const data = await response.json();
         
           if (data.error) {
-            throw new Error(`OpenAI API Error: ${data.error.message}`);
+            throw new Error(`${data.error.message}`);
           }
         
           const description = data.choices[0].message.content.trim();
