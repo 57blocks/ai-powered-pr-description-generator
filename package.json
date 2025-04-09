@@ -1,6 +1,6 @@
 {
   "name": "ai-powered-pr-description-generator",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "GitHub Action automatically generates descriptive summaries for pull requests using AI, enhancing clarity and context for reviewers.",
   "scripts": {
     "build": "esbuild index.ts --bundle --outfile=dist/bundle.js --platform=node"

@@ -47,7 +47,7 @@ To get started with the AI-Powered PR Description Generator, follow the instruct
    ```
    
 ## Configuration
-Before using the generator, you need to configure the following secrets in your GitHub repository settings:
+Before using the generator, you need to configure the following secrets in your GitHub repository settings(https://github.com/your-repo/settings/secrets/actions):
 
 - GEMINI_API_KEY: Your API key for the Gemini model.
 - OPENAI_API_KEY: Your API key for the OpenAI model (if applicable).
